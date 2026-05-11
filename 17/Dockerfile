@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/runtime:9.0-alpine3.20
+FROM mcr.microsoft.com/dotnet/runtime:10.0-alpine3.20
 
 ENV PG_MAJOR 17
 ENV PG_VERSION 17.0
