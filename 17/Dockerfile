@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine3.23
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine3.22
 
 ENV PG_MAJOR 17
 ENV PG_VERSION 17.0
