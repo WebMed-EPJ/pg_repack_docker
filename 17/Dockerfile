@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine3.22
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine3.23
 
 ENV PG_MAJOR 17
 ENV PG_VERSION 17.0
@@ -120,8 +120,7 @@ RUN set -eux; \
 
 COPY docker_entrypoint.sh /bin
 
-RUN set -x \
-    chmod +x /bin/docker_entrypoint.sh
+RUN chmod +x /bin/docker_entrypoint.sh
 
 ENTRYPOINT ["/bin/docker_entrypoint.sh"]
 CMD ["-no-superuser-check"]
