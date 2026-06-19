@@ -1,16 +1,12 @@
-FROM mcr.microsoft.com/dotnet/runtime:9.0-alpine3.20
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine3.22
 
 ENV PG_MAJOR 17
 ENV PG_VERSION 17.0
 ENV PG_SHA256 7e276131c0fdd6b62588dbad9b3bb24b8c3498d5009328dba59af16e819109de
-ENV PG_REPACK_VERSION 1.5.2
+ENV PG_REPACK_VERSION 1.5.3
 
 ENV LANG en_US.utf8
 WORKDIR /pg_repack
-
-ENV DOCKER_PG_LLVM_DEPS \
-		llvm15-dev \
-		clang15
 
 RUN set -eux; \
 	\
@@ -26,7 +22,6 @@ RUN set -eux; \
 	rm postgresql.tar.bz2; \
 	\
 	apk add --no-cache --virtual .build-deps \
-		$DOCKER_PG_LLVM_DEPS \
 		bison \
 		coreutils \
 		dpkg-dev dpkg \
@@ -63,9 +58,6 @@ RUN set -eux; \
 	wget -O config/config.guess 'https://git.savannah.gnu.org/cgit/config.git/plain/config.guess?id=7d3d27baf8107b630586c962c057e22149653deb'; \
 	wget -O config/config.sub 'https://git.savannah.gnu.org/cgit/config.git/plain/config.sub?id=7d3d27baf8107b630586c962c057e22149653deb'; \
 	\
-	export LLVM_CONFIG="/usr/lib/llvm15/bin/llvm-config"; \
-	export CLANG=clang-15; \
-	\
 	./configure \
 		--enable-option-checking=fatal \
 		--build="$gnuArch" \
@@ -87,7 +79,6 @@ RUN set -eux; \
 		--with-libxml \
 		--with-libxslt \
 		--with-icu \
-		--with-llvm \
 		--with-lz4 \
 		--with-zstd \
 	; \
@@ -129,8 +120,7 @@ RUN set -eux; \
 
 COPY docker_entrypoint.sh /bin
 
-RUN set -x \
-    chmod +x /bin/docker_entrypoint.sh
+RUN chmod +x /bin/docker_entrypoint.sh
 
 ENTRYPOINT ["/bin/docker_entrypoint.sh"]
 CMD ["-no-superuser-check"]

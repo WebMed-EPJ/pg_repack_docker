@@ -2,7 +2,7 @@
 
 PG_REPACK=(
     
-    "17,1.5.2"
+    "17,1.5.3"
 )
 
 # Check command exist function
